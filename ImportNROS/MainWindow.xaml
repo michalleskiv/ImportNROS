@@ -15,6 +15,9 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox HorizontalAlignment="Center" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="213" Height="34"/>
+        <TextBox Name="FilePathBox"  HorizontalAlignment="Center" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="213" Height="34"/>
+        <Button Content="Vybrat" HorizontalAlignment="Left" Margin="175,78,0,0" VerticalAlignment="Top" Click="ChooseButton_Click"/>
+        <Button Name="RunButton"  Content="Spustit" Grid.Column="1" HorizontalAlignment="Center" Margin="0,31,0,0" VerticalAlignment="Top" Height="57" Width="73" Click="RunButton_Click"/>
+        <TextBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="203" Margin="10,0,0,0" Grid.Row="1" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="330"/>
     </Grid>
 </Window>

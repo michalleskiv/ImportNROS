@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ImportBL;
+using Microsoft.Win32;
 
 namespace ImportNROS
 {
@@ -20,9 +22,27 @@ namespace ImportNROS
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainWorker _worker = new MainWorker();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ChooseButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                FilePathBox.Text = fileDialog.FileName;
+            }
+        }
+
+        private void RunButton_Click(object sender, RoutedEventArgs e)
+        {
+            _worker.FilePath = FilePathBox.Text;
+            _worker.Run();
         }
     }
 }
