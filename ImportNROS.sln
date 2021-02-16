@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportNROS", "ImportNROS\ImportNROS.csproj", "{BB23AE19-BAC3-4D14-8408-0146DC62FC74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportBL", "ImportBL\ImportBL.csproj", "{9AC703F4-63F0-444F-8228-A55DD4120401}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB23AE19-BAC3-4D14-8408-0146DC62FC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB23AE19-BAC3-4D14-8408-0146DC62FC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB23AE19-BAC3-4D14-8408-0146DC62FC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB23AE19-BAC3-4D14-8408-0146DC62FC74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AC703F4-63F0-444F-8228-A55DD4120401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AC703F4-63F0-444F-8228-A55DD4120401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AC703F4-63F0-444F-8228-A55DD4120401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AC703F4-63F0-444F-8228-A55DD4120401}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79767052-5039-4286-9949-580BE0A17872}
+	EndGlobalSection
+EndGlobal
