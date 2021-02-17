@@ -5,19 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImportNROS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="350">
-    <Grid ShowGridLines="True">
+        ResizeMode="NoResize"
+        Title="MainWindow" Height="500" Width="700" Background="#FFB8BBC0" WindowStyle="ThreeDBorderWindow">
+    <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="13*"></ColumnDefinition>
+            <ColumnDefinition Width="51*"/>
+            <ColumnDefinition Width="12*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="16*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Name="FilePathBox"  HorizontalAlignment="Center" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="213" Height="34"/>
-        <Button Content="Vybrat" HorizontalAlignment="Left" Margin="175,78,0,0" VerticalAlignment="Top" Click="ChooseButton_Click"/>
-        <Button Name="RunButton"  Content="Spustit" Grid.Column="1" HorizontalAlignment="Center" Margin="0,31,0,0" VerticalAlignment="Top" Height="57" Width="73" Click="RunButton_Click"/>
-        <TextBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="203" Margin="10,0,0,0" Grid.Row="1" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="330"/>
+        <TextBlock Name="FilePathBox" Grid.Column="0" Grid.ColumnSpan="2" Background="LightGray" FontSize="20" FontStyle="Normal" FontFamily="Calibri" Height="37" VerticalAlignment="Top" FontWeight="Normal" Margin="0,39,0,0" Grid.RowSpan="2"/>
+        <TextBox Name="LogBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" IsReadOnly="True" Grid.RowSpan="2" Background="LightGray"></TextBox>
+        <Button Name="ChooseButton" Grid.Row="1" Grid.Column="2" Content="Vybrat" Click="ChooseButton_Click" Background="#FF788F95"/>
+        <Button Name="RunButton" Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Content="Spustit" IsEnabled="False"  Background="#FF788F95" Click="RunButton_Click"/>
     </Grid>
 </Window>

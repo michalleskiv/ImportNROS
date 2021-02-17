@@ -4,9 +4,8 @@ using ImportBL.Models;
 
 namespace ImportBL.Interfaces
 {
-    interface IDataGetter
+    public interface IDataReceiver
     {
-        Task<IEnumerable<Contact>> GetContacts();
-        Task<IEnumerable<Gift>> GetGifts();
+        Task<IEnumerable<T>> GetTable<T>(string schemaId) where T: Item;
     }
 }

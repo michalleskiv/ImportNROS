@@ -31,18 +31,22 @@ namespace ImportNROS
 
         private void ChooseButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "Excel document (*xls, *.xlsx)|*.xlsx;*.xls"
+            };
 
             if (fileDialog.ShowDialog() == true)
             {
                 FilePathBox.Text = fileDialog.FileName;
+                RunButton.IsEnabled = true;
             }
         }
 
-        private void RunButton_Click(object sender, RoutedEventArgs e)
+        private async void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            _worker.FilePath = FilePathBox.Text;
-            _worker.Run();
+            //_worker.FilePath = FilePathBox.Text;
+            await _worker.Run();
         }
     }
 }

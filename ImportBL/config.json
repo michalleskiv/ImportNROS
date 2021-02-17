@@ -1,3 +1,9 @@
 {
-  
+  "url": "http://localhost:6704/api/v2",
+  "appId": "fc386783-9b3a-49da-ac33-1fdf64d68404",
+  "contactSchemaId": "69604468-5374-4da6-9961-de8e188e288d",
+  "subjectSchemaId": "c0cf0f21-bb1b-4f2a-a59e-6a9b1ff2ac00",
+  "giftSchemaId": "45db43df-fed3-464d-ba44-f814ed283e60",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkY2Q2NDgzYS1jZTQ1LTRjMjItODliYS1hYTVjMGQ3MmI4ZjMiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdC5jeiIsInB1cnBvc2UiOiJBUElUb2tlbiIsImFwaVRva2VuSWQiOiI3MmNjYzZlNS1kNWM1LTQyMmMtYTRlMy0zMWUxNmE4NmVlN2MiLCJuYmYiOjE2MDgyMTQ5OTcsImV4cCI6NDc2Mzg4ODU5NywiaWF0IjoxNjA4MjE0OTk3fQ.GRXIQxhpcMAFs3FGwp8XtWM3lct1ZpKkhZmESQeslxI",
+  "logFilePath": "log.txt"
 }
