@@ -12,7 +12,7 @@ namespace ImportBL
 {
     public class FileReader : IFileReader
     {
-        public IEnumerable<Gift> ReadGifts(string filePath)
+        public List<Gift> ReadGifts(string filePath)
         {
             var table = ReadFromFile(filePath).Tables[0];
             var gifts = new List<Gift>();
@@ -26,7 +26,7 @@ namespace ImportBL
 
                     var gift = new Gift
                     {
-                        KontaktId = row[0].ToString(),
+                        KontaktEmail = row[0].ToString(),
                         SubjektId = row[1].ToString(),
                         Castka = Convert.ToDecimal(row[2].ToString()?.Replace('.', ',')),
                         CisloUctu = row[3].ToString(),
@@ -44,7 +44,7 @@ namespace ImportBL
                 }
                 catch (Exception e)
                 {
-                    throw new LocalException("DataReader", $"Gift at line {rowCounter} wasn't read", e.Message);
+                    //throw new LocalException("DataReader", $"Gift at line {rowCounter} wasn't read", e.Message);
                 }
             }
 
@@ -72,8 +72,10 @@ namespace ImportBL
             }
             catch (Exception e)
             {
-                throw new LocalException("FileReader", "Error occurred while reading Gifts from Excel document", e.Message);
+                //throw new LocalException("FileReader", "Error occurred while reading Gifts from Excel document", e.Message);
             }
+
+            return null;
         }
     }
 }

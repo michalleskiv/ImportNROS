@@ -6,7 +6,8 @@ namespace ImportBL.Models
 {
     public class Gift : Item
     {
-        public string KontaktId { get; set; }
+        public string KontaktEmail { get; set; }
+        public string SpecifickySymbol { get; set; }
         public Contact Kontakt { get; set; }
         public string SubjektId { get; set; }
         public Subject Subjekt { get; set; }
@@ -25,5 +26,17 @@ namespace ImportBL.Models
 
         public int Row { get; set; }
         public string ImportId { get; set; }
+
+        public override bool Equals(Item other)
+        {
+            if (!(other is Gift))
+            {
+                return false;
+            }
+
+            var gift = (Gift) other;
+
+            return false;
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace ImportBL
             _token = token;
         }
 
-        public async Task<IEnumerable<T>> GetTable<T>(string schemaId) where T: Item
+        public async Task<List<T>> GetTable<T>(string schemaId) where T: Item
         {
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
@@ -63,7 +63,7 @@ namespace ImportBL
             }
             catch (Exception e)
             {
-                throw new LocalException("TabidooDataReceiver", "An error occurred while receiving data", e.Message);
+                //throw new LocalException("TabidooDataReceiver", "An error occurred while receiving data", e.Message);
             }
 
             return items;

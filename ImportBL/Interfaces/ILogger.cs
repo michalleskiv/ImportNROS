@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
+using ImportBL.Exceptions;
 
 namespace ImportBL.Interfaces
 {
     public interface ILogger
     {
-        void LogInfo(string message);
-        void LogException(string message);
-        void LogException(string message, string originalMessage);
+        void LogException(LocalException exception);
+        void LogException(Exception exception);
+        public Task LogToFile(string filePath);
     }
 }

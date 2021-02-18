@@ -15,19 +15,21 @@ using Newtonsoft.Json.Serialization;
 
 namespace ImportBL
 {
-    class TabidooDataSender : IDataSender
+    public class TabidooDataSender : IDataSender
     {
         private const int GonnaSend = 1000;
 
         private readonly string _url;
         private readonly string _appId;
         private readonly string _token;
+        private readonly ILogger _logger;
 
-        public TabidooDataSender(string url, string appId, string token)
+        public TabidooDataSender(string url, string appId, string token, ILogger logger)
         {
             _url = url;
             _appId = appId;
             _token = token;
+            _logger = logger;
         }
 
         public async Task SendItems<T>(string schemaId, List<T> items) where T: Item
@@ -41,9 +43,11 @@ namespace ImportBL
 
             List<string> errorMessages = new List<string>();
 
-            while (items.Count > 0)
+            while (items.Count > itemsToSkip)
             {
                 var json = GetJsonList(items, itemsToSkip, out int readItems);
+
+                Console.WriteLine(json);
 
                 itemsToSkip += readItems;
 
@@ -54,13 +58,16 @@ namespace ImportBL
 
                     if (response.IsSuccessStatusCode)
                     {
-                        ProcessResponse(response, items, ref successfulSent, errorMessages);
+                        successfulSent = await ProcessResponse(response, items, successfulSent, errorMessages);
                     }
+                }
+                catch (LocalException e)
+                {
+                    _logger.LogException(e);
                 }
                 catch (Exception e)
                 {
-                    throw new LocalException("TabidooDataSender", 
-                        "An error occurred while sending items", e.Message);
+                    _logger.LogException(e);
                 }
             }
         }
@@ -96,10 +103,10 @@ namespace ImportBL
             return json;
         }
 
-        private void ProcessResponse<T>(HttpResponseMessage response, List<T> items, 
-            ref int successfulSent, List<string> errorMessages) where T: Item
+        private async Task<int> ProcessResponse<T>(HttpResponseMessage response, List<T> items, 
+            int successfulSent, List<string> errorMessages) where T: Item
         {
-            var jObject = JObject.Parse(response.Content.ToString() ?? string.Empty);
+            var jObject = JObject.Parse(await response.Content.ReadAsStringAsync() ?? string.Empty);
             successfulSent += (int) (jObject["bulk"]?["successCount"] ?? 0);
             var serializedItems = jObject["data"]?.Children() ?? new JEnumerable<JToken>();
 
@@ -107,12 +114,14 @@ namespace ImportBL
             {
                 var deserializedItem = JsonConvert.DeserializeObject<T>(serializedItem["fields"]?.ToString() 
                                                                         ?? string.Empty);
-                var localItem = items.Single(i => i == deserializedItem);
+                var localItem = items.Single(i => i.Equals(deserializedItem));
                 localItem.Id = serializedItem["id"]?.ToString();
             }
 
             errorMessages.AddRange(jObject["errors"]?.Children()["message"].Select(m => m.ToString()).ToList() 
                                    ?? new List<string>());
+
+            return successfulSent;
         }
     }
 }

@@ -5,6 +5,6 @@ namespace ImportBL.Interfaces
 {
     public interface IFileReader
     {
-        IEnumerable<Gift> ReadGifts(string filePath);
+        List<Gift> ReadGifts(string filePath);
     }
 }

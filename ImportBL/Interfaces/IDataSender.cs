@@ -4,7 +4,7 @@ using ImportBL.Models;
 
 namespace ImportBL.Interfaces
 {
-    interface IDataSender
+    public interface IDataSender
     {
         Task SendItems<T>(string schemaId, List<T> items) where T: Item;
     }

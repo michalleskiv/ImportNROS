@@ -2,10 +2,10 @@
 
 namespace ImportBL.Models
 {
-    public abstract class Item : IComparable<Item>
+    public abstract class Item : IEquatable<Item>
     {
         public string Id { get; set; }
 
-        public abstract int CompareTo(Item other);
+        public abstract bool Equals(Item other);
     }
 }

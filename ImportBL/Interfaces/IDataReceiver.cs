@@ -6,6 +6,6 @@ namespace ImportBL.Interfaces
 {
     public interface IDataReceiver
     {
-        Task<IEnumerable<T>> GetTable<T>(string schemaId) where T: Item;
+        Task<List<T>> GetTable<T>(string schemaId) where T: Item;
     }
 }

@@ -45,8 +45,7 @@ namespace ImportNROS
 
         private async void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            //_worker.FilePath = FilePathBox.Text;
-            await _worker.Run();
+            await _worker.Run(FilePathBox.Text);
         }
     }
 }

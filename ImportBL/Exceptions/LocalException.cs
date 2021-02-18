@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ImportBL.Exceptions
 {
     public class LocalException : Exception
     {
-        public string ClassInfo { get; }
-        public string Details { get; }
-        public string OriginalMessage { get; set; }
+        public List<string> ErrorList { get; set; } = new List<string>();
 
-        public LocalException(string classInfo, string details)
+        public LocalException(string originalMessage)
         {
-            ClassInfo = classInfo;
-            Details = details;
+            ErrorList.Add(originalMessage);
         }
 
-        public LocalException(string classInfo, string details, string originalMessage) : this(classInfo, details)
+        public LocalException(List<string> errorList)
         {
-            OriginalMessage = originalMessage;
+            ErrorList = errorList;
         }
     }
 }

@@ -1,25 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using System.Threading.Tasks;
+using ImportBL.Exceptions;
 using ImportBL.Interfaces;
 
 namespace ImportBL.Models
 {
     public class Logger : ILogger
     {
-        public void LogInfo(string message)
+        public List<string> ErrorList { get; set; } = new List<string>();
+        public List<string> NewErrors { get; set; } = new List<string>();
+
+        public void LogException(LocalException exception)
         {
-            throw new NotImplementedException();
+            ErrorList.AddRange(exception.ErrorList);
+            NewErrors.AddRange(exception.ErrorList);
         }
 
-        public void LogException(string message)
+        public void LogException(Exception exception)
         {
-            throw new NotImplementedException();
+            ErrorList.Add(exception.Message);
+            NewErrors.Add(exception.Message);
         }
 
-        public void LogException(string message, string originalMessage)
+        public async Task LogToFile(string filePath)
         {
-            throw new NotImplementedException();
+            string content = string.Empty;
+
+            foreach (var error in ErrorList)
+            {
+                content += error + "\n\n";
+            }
+
+            await File.WriteAllTextAsync(filePath, content);
         }
     }
 }
