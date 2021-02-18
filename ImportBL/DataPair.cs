@@ -8,13 +8,20 @@ namespace ImportBL
 {
     public class DataPair : IDataPair
     {
+        private readonly ILogger _logger;
+
+        public DataPair(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public List<Contact> ConnectData(List<Gift> gifts, List<Contact> contacts, List<Subject> subjects)
         {
             var contactsToInsert = new List<Contact>();
 
             foreach (var gift in gifts)
             {
-                if (gift.Kontakt == null)
+                try
                 {
                     if (!string.IsNullOrWhiteSpace(gift.KontaktEmail))
                     {
@@ -43,11 +50,15 @@ namespace ImportBL
                         contactsToInsert.Add(gift.Kontakt);
                         contacts.Add(gift.Kontakt);
                     }
-                }
 
-                if (!string.IsNullOrWhiteSpace(gift.SubjektId))
+                    if (!string.IsNullOrWhiteSpace(gift.SubjektId))
+                    {
+                        gift.Subjekt = subjects.SingleOrDefault(s => s.Ico == gift.SubjektId);
+                    }
+                }
+                catch (Exception e)
                 {
-                    gift.Subjekt = subjects.SingleOrDefault(s => s.Ico == gift.SubjektId);
+                    _logger.LogException($"{e.Message}, gift at row {gift.Row} cannot be connected with contact or subject");
                 }
             }
 

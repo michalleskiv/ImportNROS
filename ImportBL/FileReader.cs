@@ -12,6 +12,13 @@ namespace ImportBL
 {
     public class FileReader : IFileReader
     {
+        private readonly ILogger _logger;
+
+        public FileReader(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public List<Gift> ReadGifts(string filePath)
         {
             var table = ReadFromFile(filePath).Tables[0];
@@ -44,7 +51,7 @@ namespace ImportBL
                 }
                 catch (Exception e)
                 {
-                    //throw new LocalException("DataReader", $"Gift at line {rowCounter} wasn't read", e.Message);
+                    _logger.LogException(e);
                 }
             }
 
@@ -72,10 +79,8 @@ namespace ImportBL
             }
             catch (Exception e)
             {
-                //throw new LocalException("FileReader", "Error occurred while reading Gifts from Excel document", e.Message);
+                throw new LocalException(e.Message);
             }
-
-            return null;
         }
     }
 }

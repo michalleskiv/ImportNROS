@@ -8,7 +8,6 @@
         public static string SubjectSchemaId { get; set; }
         public static string GiftSchemaId { get; set; }
         public static string Token { get; set; }
-        public static string FilePath { get; set; }
         public static string LogFilePath { get; set; }
     }
 }

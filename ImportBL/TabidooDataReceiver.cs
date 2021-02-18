@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using ImportBL.Exceptions;
 using ImportBL.Interfaces;
 using ImportBL.Models;
 using Newtonsoft.Json;
@@ -18,12 +17,14 @@ namespace ImportBL
         private readonly string _url;
         private readonly string _appId;
         private readonly string _token;
+        private readonly ILogger _logger;
 
-        public TabidooDataReceiver(string url, string appId, string token)
+        public TabidooDataReceiver(string url, string appId, string token, ILogger logger)
         {
             _url = url;
             _appId = appId;
             _token = token;
+            _logger = logger;
         }
 
         public async Task<List<T>> GetTable<T>(string schemaId) where T: Item
@@ -37,9 +38,10 @@ namespace ImportBL
 
             int readCount = GonnaRead;
 
-            try
+            
+            for (int i = 0; readCount > 0; i += readCount)
             {
-                for (int i = 0; readCount > 0; i += readCount)
+                try
                 {
                     readCount = 0;
                     var result = await httpClient.GetAsync(url + $"?limit={GonnaRead}&skip={i}");
@@ -52,7 +54,8 @@ namespace ImportBL
 
                         foreach (var serializedContact in serializedContacts)
                         {
-                            var deserializedObject = JsonConvert.DeserializeObject<T>(serializedContact["fields"]?.ToString() 
+                            var deserializedObject = JsonConvert.DeserializeObject<T>(
+                                serializedContact["fields"]?.ToString()
                                 ?? string.Empty);
                             deserializedObject.Id = serializedContact["id"]?.ToString();
                             items.Add(deserializedObject);
@@ -60,10 +63,10 @@ namespace ImportBL
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                //throw new LocalException("TabidooDataReceiver", "An error occurred while receiving data", e.Message);
+                catch (Exception e)
+                {
+                    _logger.LogException(e);
+                }
             }
 
             return items;

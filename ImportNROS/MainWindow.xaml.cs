@@ -26,6 +26,7 @@ namespace ImportNROS
 
         public MainWindow()
         {
+            _worker.StateChanged += WriteLogs;
             InitializeComponent();
         }
 
@@ -46,6 +47,12 @@ namespace ImportNROS
         private async void RunButton_Click(object sender, RoutedEventArgs e)
         {
             await _worker.Run(FilePathBox.Text);
+        }
+
+        private void WriteLogs(object sender, EventArgs e)
+        {
+            LogBox.Text += _worker.GetNewLogs();
+            ProgressBar.Value = _worker.Progress;
         }
     }
 }

@@ -41,13 +41,9 @@ namespace ImportBL
             int itemsToSkip = 0;
             int successfulSent = 0;
 
-            List<string> errorMessages = new List<string>();
-
             while (items.Count > itemsToSkip)
             {
                 var json = GetJsonList(items, itemsToSkip, out int readItems);
-
-                Console.WriteLine(json);
 
                 itemsToSkip += readItems;
 
@@ -58,7 +54,7 @@ namespace ImportBL
 
                     if (response.IsSuccessStatusCode)
                     {
-                        successfulSent = await ProcessResponse(response, items, successfulSent, errorMessages);
+                        successfulSent = await ProcessResponse(response, items, successfulSent);
                     }
                 }
                 catch (LocalException e)
@@ -104,7 +100,7 @@ namespace ImportBL
         }
 
         private async Task<int> ProcessResponse<T>(HttpResponseMessage response, List<T> items, 
-            int successfulSent, List<string> errorMessages) where T: Item
+            int successfulSent) where T: Item
         {
             var jObject = JObject.Parse(await response.Content.ReadAsStringAsync() ?? string.Empty);
             successfulSent += (int) (jObject["bulk"]?["successCount"] ?? 0);
@@ -114,11 +110,15 @@ namespace ImportBL
             {
                 var deserializedItem = JsonConvert.DeserializeObject<T>(serializedItem["fields"]?.ToString() 
                                                                         ?? string.Empty);
-                var localItem = items.Single(i => i.Equals(deserializedItem));
-                localItem.Id = serializedItem["id"]?.ToString();
+                var localItem = items.SingleOrDefault(i => i.Equals(deserializedItem));
+
+                if (localItem != null)
+                {
+                    localItem.Id = serializedItem["id"]?.ToString();
+                }
             }
 
-            errorMessages.AddRange(jObject["errors"]?.Children()["message"].Select(m => m.ToString()).ToList() 
+            _logger.LogException(jObject["errors"]?.Children()["message"].Select(m => m.ToString()).ToList() 
                                    ?? new List<string>());
 
             return successfulSent;
