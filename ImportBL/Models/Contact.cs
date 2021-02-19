@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ImportBL.Models
 {
@@ -8,6 +9,8 @@ namespace ImportBL.Models
         public string CisloUctu { get; set; }
         public string SpecifickySymbol { get; set; }
         public List<string> Tag { get; set; }
+        [JsonIgnore]
+        public List<Gift> Gifts { get; set; } = new List<Gift>();
 
         public override bool Equals(Item other)
         {

@@ -68,6 +68,38 @@ namespace ImportBL
             }
         }
 
+        public async Task UpdateContacts(string contactsSchemaId, List<Contact> contacts)
+        {
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+
+            foreach (var contact in contacts)
+            {
+                string url = $"{_url}/apps/{_appId}/schemas/{contactsSchemaId}/data/{contact.Id}";
+                var contactToSend = new UpdateContactHolder
+                {
+                    Fields = new ContactUpdateDto(contact)
+                };
+                var serializedContact = JsonConvert.SerializeObject(contactToSend, new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy()
+                    },
+                    Formatting = Formatting.Indented,
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                var content = new StringContent(serializedContact, Encoding.UTF8, "application/json");
+
+                var response = await httpClient.PatchAsync(url, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogException($"Kontakt {contact.Email}, {contact.CisloUctu}, {contact.SpecifickySymbol} was not updated");
+                }
+            }
+        }
+
         private string GetJsonList<T>(List<T> items, int itemsToSkip, out int readItems) where T: Item
         {
             var dataToSend = items

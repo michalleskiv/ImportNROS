@@ -7,5 +7,6 @@ namespace ImportBL.Interfaces
     public interface IDataSender
     {
         Task SendItems<T>(string schemaId, List<T> items) where T: Item;
+        Task UpdateContacts(string contactsSchemaId, List<Contact> contacts);
     }
 }

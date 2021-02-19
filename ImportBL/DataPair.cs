@@ -23,7 +23,12 @@ namespace ImportBL
             {
                 try
                 {
-                    if (!string.IsNullOrWhiteSpace(gift.KontaktEmail))
+                    if (!string.IsNullOrWhiteSpace(gift.Kontakt?.Id))
+                    {
+                        gift.Kontakt = contacts.SingleOrDefault(c => c.Id == gift.Kontakt.Id);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(gift.KontaktEmail) && gift.Kontakt == null)
                     {
                         gift.Kontakt = contacts.SingleOrDefault(c => c.Email?.Href == gift.KontaktEmail);
                     }
@@ -50,6 +55,8 @@ namespace ImportBL
                         contactsToInsert.Add(gift.Kontakt);
                         contacts.Add(gift.Kontakt);
                     }
+
+                    gift.Kontakt.Gifts.Add(gift);
 
                     if (!string.IsNullOrWhiteSpace(gift.SubjektId))
                     {

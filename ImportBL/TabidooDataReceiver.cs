@@ -38,7 +38,6 @@ namespace ImportBL
 
             int readCount = GonnaRead;
 
-            
             for (int i = 0; readCount > 0; i += readCount)
             {
                 try
