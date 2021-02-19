@@ -95,7 +95,10 @@ namespace ImportBL
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogException($"Kontakt {contact.Email}, {contact.CisloUctu}, {contact.SpecifickySymbol} was not updated");
+                    _logger.LogException("Kontakt was not updated:\n" +
+                                         $"- email: {contact.Email},\n" +
+                                         $"- cislo uctu: {contact.CisloUctu},\n" +
+                                         $"- ss: {contact.SpecifickySymbol}");
                 }
             }
         }
@@ -150,8 +153,15 @@ namespace ImportBL
                 }
             }
 
-            _logger.LogException(jObject["errors"]?.Children()["message"].Select(m => m.ToString()).ToList() 
-                                   ?? new List<string>());
+            var serializedErrors = jObject["errors"]?.Children() ?? new JEnumerable<JToken>();
+
+            foreach (var error in serializedErrors)
+            {
+                var erroneousItem = error["recordIndex"] != null ? items[(int) error["recordIndex"]] : null;
+
+                var errorToWrite = $"{error}\n" + erroneousItem;
+                _logger.LogException(errorToWrite);
+            }
 
             return successfulSent;
         }

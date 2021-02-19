@@ -21,5 +21,11 @@
 
             return false;
         }
+
+        public override string ToString()
+        {
+            return "Subject: " +
+                   $"\t-ico: {Ico}";
+        }
     }
 }

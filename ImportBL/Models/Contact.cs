@@ -41,5 +41,14 @@ namespace ImportBL.Models
 
             return false;
         }
+
+        public override string ToString()
+        {
+            return "Contact:\n" +
+                   $"\t-email: {Email}\n" +
+                   $"\t-cislo uctu: {CisloUctu}\n" +
+                   $"\t-ss: {SpecifickySymbol}\n" +
+                   $"\t-id: {Id}";
+        }
     }
 }
