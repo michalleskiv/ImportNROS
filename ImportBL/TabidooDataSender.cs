@@ -95,10 +95,7 @@ namespace ImportBL
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogException("Kontakt was not updated:\n" +
-                                         $"- email: {contact.Email},\n" +
-                                         $"- cislo uctu: {contact.CisloUctu},\n" +
-                                         $"- ss: {contact.SpecifickySymbol}");
+                    _logger.LogException(contact + "\nwas updated");
                 }
             }
         }

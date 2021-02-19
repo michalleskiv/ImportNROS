@@ -44,7 +44,8 @@ namespace ImportBL.Models
                    $"\t-email: {KontaktEmail}\n" +
                    $"\t-cislo uctu: {CisloUctu}\n" +
                    $"\t-ss: {SpecifickySymbol}\n" +
-                   $"\t-id: {Id}";
+                   $"\t-id: {Id}\n" +
+                   $"-row (if gift was in Excel): {Row}";
         }
     }
 }

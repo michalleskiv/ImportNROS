@@ -65,12 +65,7 @@ namespace ImportBL
                 }
                 catch (Exception e)
                 {
-                    _logger.LogException($"{e.Message}, an error occurred while pairing gift: \n" +
-                                         $"-email: {gift.KontaktEmail},\n" +
-                                         $"-cislo uctu: {gift.CisloUctu},\n" +
-                                         $"-ss: {gift.SpecifickySymbol},\n" +
-                                         $"-castka: {gift.Castka},\n" +
-                                         $"-row (if gift was in Excel): {gift.Row}");
+                    _logger.LogException($"{e.Message}, an error occurred while pairing gift: \n" + gift);
                 }
             }
 
