@@ -16,8 +16,8 @@ namespace ImportBL
 
         public void UpdateTags(List<Contact> contacts, List<Gift> gifts)
         {
-            UpdateNormal(contacts);
-            UpdateKlubar(gifts);
+            UpdateNormal(contacts);     // update usual contacts
+            UpdateKlubar(gifts);        // update club 
         }
 
         private void UpdateNormal(List<Contact> contacts)

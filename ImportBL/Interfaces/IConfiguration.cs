@@ -1,5 +1,8 @@
 ﻿namespace ImportBL.Interfaces
 {
+    /// <summary>
+    /// Saves library configs
+    /// </summary>
     public interface IConfiguration
     {
         public string Url { get; set; }
