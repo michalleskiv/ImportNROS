@@ -19,11 +19,11 @@ namespace ImportBL
         private readonly string _token;
         private readonly ILogger _logger;
 
-        public TabidooDataReceiver(string url, string appId, string token, ILogger logger)
+        public TabidooDataReceiver(IConfiguration configuration, ILogger logger)
         {
-            _url = url;
-            _appId = appId;
-            _token = token;
+            _url = configuration.Url;
+            _appId = configuration.AppId;
+            _token = configuration.Token;
             _logger = logger;
         }
 

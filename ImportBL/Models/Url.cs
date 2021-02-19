@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ImportBL.Models
+﻿namespace ImportBL.Models
 {
     public class Url
     {

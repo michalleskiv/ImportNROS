@@ -10,7 +10,7 @@ namespace ImportBL
     public class Logger : ILogger
     {
         public List<string> ErrorList { get; set; } = new List<string>();
-        public List<string> NewErrors { get; set; } = new List<string>();
+        public List<string> CurrentErrors { get; set; } = new List<string>();
 
         public event EventHandler StateChanged;
 
@@ -64,12 +64,12 @@ namespace ImportBL
         {
             string res = string.Empty;
 
-            foreach (var error in NewErrors)
+            foreach (var error in CurrentErrors)
             {
                 res += error + "\n\n";
             }
 
-            NewErrors.Clear();
+            CurrentErrors.Clear();
 
             return res;
         }
@@ -98,7 +98,7 @@ namespace ImportBL
             var errorToLog = "error: " + message;
 
             ErrorList.Add(errorToLog);
-            NewErrors.Add(errorToLog);
+            CurrentErrors.Add(errorToLog);
         }
 
         private void InsertInfo(string message)
@@ -106,7 +106,7 @@ namespace ImportBL
             var errorToLog = "info: " + message;
 
             ErrorList.Add(errorToLog);
-            NewErrors.Add(errorToLog);
+            CurrentErrors.Add(errorToLog);
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using ImportBL.Interfaces;
-
-namespace ImportBL
+﻿namespace ImportBL.Interfaces
 {
-    public class Configuration : IConfiguration
+    public interface IConfiguration
     {
         public string Url { get; set; }
         public string AppId { get; set; }

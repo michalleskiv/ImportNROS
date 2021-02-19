@@ -3,15 +3,15 @@ using System.Threading.Tasks;
 using ImportBL.Exceptions;
 using ImportBL.Interfaces;
 using ImportBL.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace ImportBL
 {
     /// <summary>
     /// Main class, that manages all processes
     /// </summary>
-    public class MainWorker
+    public class MainWorker : IMainWorker
     {
+        private readonly IConfiguration _configuration;
         private readonly IDataReceiver _dataReceiver;
         private readonly IFileReader _fileReader;
         private readonly IDataPair _dataPair;
@@ -28,18 +28,17 @@ namespace ImportBL
         /// </summary>
         public event EventHandler StateChanged;
 
-        public MainWorker()
+        public MainWorker(IDataReceiver dataReceiver, IFileReader fileReader, IDataPair dataPair, IDataSender dataSender, 
+            ISessionIdGenerator generator, IContactUpdater updater, ILogger logger, IConfiguration configuration)
         {
-            SetConfig();
-
-            _logger = new Logger();
-
-            _dataReceiver = new TabidooDataReceiver(Configuration.Url, Configuration.AppId, Configuration.Token, _logger);
-            _fileReader = new FileReader(_logger);
-            _dataPair = new DataPair(_logger);
-            _dataSender = new TabidooDataSender(Configuration.Url, Configuration.AppId, Configuration.Token, _logger);
-            _generator = new SessionIdGenerator();
-            _updater = new ContactUpdater();
+            _configuration = configuration;
+            _logger = logger;
+            _dataReceiver = dataReceiver;
+            _fileReader = fileReader;
+            _dataPair = dataPair;
+            _dataSender = dataSender;
+            _generator = generator;
+            _updater = updater;
         }
 
         /// <summary>
@@ -60,13 +59,13 @@ namespace ImportBL
                 _logger.LogInfo($"Session ID is {_generator.Id}");
 
                 // Load data
-                var tabidooContacts = await _dataReceiver.GetTable<Contact>(Configuration.ContactSchemaId);
+                var tabidooContacts = await _dataReceiver.GetTable<Contact>(_configuration.ContactSchemaId);
                 Progress += toAdd;
                 _logger.LogInfo("Contacts had got from Tabidoo");
-                var tabidooSubjects = await _dataReceiver.GetTable<Subject>(Configuration.SubjectSchemaId);
+                var tabidooSubjects = await _dataReceiver.GetTable<Subject>(_configuration.SubjectSchemaId);
                 Progress += toAdd;
                 _logger.LogInfo("Subjects had got from Tabidoo");
-                var tabidooGifts = await _dataReceiver.GetTable<Gift>(Configuration.GiftSchemaId);
+                var tabidooGifts = await _dataReceiver.GetTable<Gift>(_configuration.GiftSchemaId);
                 Progress += toAdd;
                 _logger.LogInfo("Gifts had got from Tabidoo");
 
@@ -84,12 +83,12 @@ namespace ImportBL
                 _logger.LogInfo("Data paired");
 
                 // Send contacts
-                await _dataSender.SendItems(Configuration.ContactSchemaId, contactsToInsert);
+                await _dataSender.SendItems(_configuration.ContactSchemaId, contactsToInsert);
                 Progress += toAdd;
                 _logger.LogInfo("Contacts had sent to Tabidoo");
 
                 // send gifts
-                await _dataSender.SendItems(Configuration.GiftSchemaId, excelGifts);
+                await _dataSender.SendItems(_configuration.GiftSchemaId, excelGifts);
                 Progress += toAdd;
                 _logger.LogInfo("Gifts had sent to Tabidoo");
 
@@ -98,11 +97,11 @@ namespace ImportBL
                 _updater.UpdateTags(tabidooContacts, tabidooGifts);
 
                 // Update contacts in Tabidoo
-                await _dataSender.UpdateContacts(Configuration.ContactSchemaId, tabidooContacts);
+                await _dataSender.UpdateContacts(_configuration.ContactSchemaId, tabidooContacts);
                 Progress += toAdd;
                 _logger.LogInfo("Contacts have been updated in Tabidoo");
 
-                await _logger.LogToFile(Configuration.LogFilePath);
+                await _logger.LogToFile(_configuration.LogFilePath);
                 Progress = 100;
                 _logger.LogInfo("Done!");
             }
@@ -123,21 +122,6 @@ namespace ImportBL
         public string GetNewLogs()
         {
             return _logger.GetNewLogs();
-        }
-
-        private void SetConfig()
-        {
-            IConfiguration config = new ConfigurationBuilder()
-                .AddJsonFile("config.json", true, true)
-                .Build();
-
-            Configuration.Url = config["url"];
-            Configuration.AppId = config["appId"];
-            Configuration.ContactSchemaId = config["contactSchemaId"];
-            Configuration.SubjectSchemaId = config["subjectSchemaId"];
-            Configuration.GiftSchemaId = config["giftSchemaId"];
-            Configuration.Token = config["token"];
-            Configuration.LogFilePath = config["logFilePath"] ?? "log.txt";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using ImportBL;
+using ImportBL.Interfaces;
 using Microsoft.Win32;
 
 namespace ImportNROS
@@ -10,11 +11,13 @@ namespace ImportNROS
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MainWorker _worker = new MainWorker();
+        private readonly IMainWorker _worker;
 
         public MainWindow()
         {
+            _worker = DiContainer.Container.GetInstance<IMainWorker>();
             _worker.StateChanged += WriteLogs;
+
             InitializeComponent();
         }
 
