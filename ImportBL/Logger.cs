@@ -9,8 +9,14 @@ namespace ImportBL
 {
     public class Logger : ILogger
     {
-        public List<string> ErrorList { get; set; } = new List<string>();
-        public List<string> CurrentErrors { get; set; } = new List<string>();
+        /// <summary>
+        /// Whole error list
+        /// </summary>
+        private List<string> ErrorList { get; } = new List<string>();
+        /// <summary>
+        /// Only new errors
+        /// </summary>
+        private List<string> CurrentErrors { get; } = new List<string>();
 
         public event EventHandler StateChanged;
 

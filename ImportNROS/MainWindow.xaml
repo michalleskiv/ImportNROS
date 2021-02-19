@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ImportNROS"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="MainWindow" Height="500" Width="700" Background="#FFB8BBC0" WindowStyle="ThreeDBorderWindow">
+        Title="Import NROS" Height="500" Width="700" Background="#FFB8BBC0" WindowStyle="ThreeDBorderWindow">
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"></ColumnDefinition>

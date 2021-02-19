@@ -40,12 +40,7 @@ namespace ImportBL
             _generator = generator;
             _updater = updater;
         }
-
-        /// <summary>
-        /// Run processing
-        /// </summary>
-        /// <param name="filePath">Path to the Excel document</param>
-        /// <returns></returns>
+        
         public async Task Run(string filePath)
         {
             IsFree = false;
@@ -114,11 +109,7 @@ namespace ImportBL
                 IsFree = true;
             }
         }
-
-        /// <summary>
-        /// Return new logs
-        /// </summary>
-        /// <returns>All new logs</returns>
+        
         public string GetNewLogs()
         {
             return _logger.GetNewLogs();

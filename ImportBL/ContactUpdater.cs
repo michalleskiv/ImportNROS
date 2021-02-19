@@ -8,11 +8,11 @@ namespace ImportBL
 {
     public class ContactUpdater : IContactUpdater
     {
-        private const string _prvodarce = "Prvodárce";
-        private const string _individualni = "Individuální dárce";
-        private const string _pravidelny = "Pravidelný dárce";
-        private const string _klubar = "Klubař";
-        private const string _cisloUctu = "12301230/0600";
+        private readonly string _prvodarce = "Prvodárce";
+        private readonly string _individualni = "Individuální dárce";
+        private readonly string _pravidelny = "Pravidelný dárce";
+        private readonly string _klubar = "Klubař";
+        private readonly string _cisloUctu = "12301230/0600";
 
         public void UpdateTags(List<Contact> contacts, List<Gift> gifts)
         {

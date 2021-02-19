@@ -23,26 +23,31 @@ namespace ImportBL
             {
                 try
                 {
+                    // connect by database ID
                     if (!string.IsNullOrWhiteSpace(gift.Kontakt?.Id))
                     {
                         gift.Kontakt = contacts.SingleOrDefault(c => c.Id == gift.Kontakt.Id);
                     }
 
+                    // connect by email
                     if (!string.IsNullOrWhiteSpace(gift.KontaktEmail) && gift.Kontakt == null)
                     {
                         gift.Kontakt = contacts.SingleOrDefault(c => c.Email?.Href == gift.KontaktEmail);
                     }
 
+                    // connect by account number
                     if (!string.IsNullOrWhiteSpace(gift.CisloUctu) && gift.Kontakt == null)
                     {
                         gift.Kontakt = contacts.SingleOrDefault(c => c.CisloUctu == gift.CisloUctu);
                     }
 
+                    // connect by specific number
                     if (!string.IsNullOrWhiteSpace(gift.SpecifickySymbol) && gift.Kontakt == null)
                     {
                         gift.Kontakt = contacts.SingleOrDefault(c => c.SpecifickySymbol == gift.SpecifickySymbol);
                     }
 
+                    // create new contact
                     if (gift.Kontakt == null)
                     {
                         gift.Kontakt = new Contact
@@ -56,6 +61,7 @@ namespace ImportBL
                         contacts.Add(gift.Kontakt);
                     }
 
+                    // add current gift to list of contact's gifts
                     gift.Kontakt.Gifts.Add(gift);
 
                     if (!string.IsNullOrWhiteSpace(gift.SubjektId))
