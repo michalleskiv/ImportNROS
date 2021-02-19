@@ -61,18 +61,18 @@ namespace ImportBL
                 // Load data
                 var tabidooContacts = await _dataReceiver.GetTable<Contact>(_configuration.ContactSchemaId);
                 Progress += toAdd;
-                _logger.LogInfo("Contacts had got from Tabidoo");
+                _logger.LogInfo("Contacts have been got from Tabidoo");
                 var tabidooSubjects = await _dataReceiver.GetTable<Subject>(_configuration.SubjectSchemaId);
                 Progress += toAdd;
-                _logger.LogInfo("Subjects had got from Tabidoo");
+                _logger.LogInfo("Subjects have been got from Tabidoo");
                 var tabidooGifts = await _dataReceiver.GetTable<Gift>(_configuration.GiftSchemaId);
                 Progress += toAdd;
-                _logger.LogInfo("Gifts had got from Tabidoo");
+                _logger.LogInfo("Gifts have been got from Tabidoo");
 
                 // Read gifts from Excel
                 var excelGifts = _fileReader.ReadGifts(filePath);
                 Progress += toAdd;
-                _logger.LogInfo("Gifts had read from Excel document");
+                _logger.LogInfo("Gifts have been read from Excel document");
 
                 _generator.MarkGifts(excelGifts);
 
@@ -80,17 +80,17 @@ namespace ImportBL
                 var contactsToInsert = _dataPair.ConnectData(excelGifts, tabidooContacts, tabidooSubjects);
                 _dataPair.ConnectData(tabidooGifts, tabidooContacts, tabidooSubjects);
                 Progress += toAdd;
-                _logger.LogInfo("Data paired");
+                _logger.LogInfo("Data have been paired");
 
                 // Send contacts
                 await _dataSender.SendItems(_configuration.ContactSchemaId, contactsToInsert);
                 Progress += toAdd;
-                _logger.LogInfo("Contacts had sent to Tabidoo");
+                _logger.LogInfo("Contacts have been sent to Tabidoo");
 
                 // send gifts
                 await _dataSender.SendItems(_configuration.GiftSchemaId, excelGifts);
                 Progress += toAdd;
-                _logger.LogInfo("Gifts had sent to Tabidoo");
+                _logger.LogInfo("Gifts have been sent to Tabidoo");
 
                 //Fix it
                 tabidooGifts.AddRange(excelGifts);
