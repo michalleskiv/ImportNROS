@@ -46,8 +46,12 @@ namespace ImportNROS
 
         private void WriteLogs(object sender, EventArgs e)
         {
-            LogBox.Text += _worker.GetNewLogs();
+            string textToAppend = _worker.GetNewLogs();
             ProgressBar.Value = _worker.Progress;
+            
+            LogBox.AppendText(textToAppend);
+            LogBox.SelectionStart = LogBox.Text.Length;
+            LogBox.ScrollToEnd();
         }
     }
 }

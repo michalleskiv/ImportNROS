@@ -24,7 +24,9 @@
             <RowDefinition Height="9*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Name="FilePathBox" Grid.Column="0" Grid.ColumnSpan="2" Background="LightGray" FontSize="20" FontStyle="Normal" FontFamily="Calibri" Height="37" VerticalAlignment="Top" FontWeight="Normal" Margin="0,39,0,0" Grid.RowSpan="2"/>
-        <TextBox Name="LogBox" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" IsReadOnly="True" Grid.RowSpan="2" Background="LightGray"></TextBox>
+        <TextBox Name="LogBox" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" IsReadOnly="True" Grid.RowSpan="2" Background="LightGray"></TextBox>
         <Button Name="ChooseButton" Grid.Row="1" Grid.Column="2" Content="Vybrat" Click="ChooseButton_Click" Background="#FF788F95"/>
         <Button Name="RunButton" Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Content="Spustit" IsEnabled="False"  Background="#FF788F95" Click="RunButton_Click"/>
         <ProgressBar Name="ProgressBar" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6"/>
