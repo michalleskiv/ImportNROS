@@ -54,47 +54,49 @@ namespace ImportBL
                 _logger.LogInfo($"Session ID is {_generator.Id}");
 
                 // Load data
+                _logger.LogInfo("Getting contacts from Tabidoo...");
                 var tabidooContacts = await _dataReceiver.GetTable<Contact>(_configuration.ContactSchemaId);
                 Progress += toAdd;
-                _logger.LogInfo("Contacts have been got from Tabidoo");
+                
+                _logger.LogInfo("Getting subjects from Tabidoo...");
                 var tabidooSubjects = await _dataReceiver.GetTable<Subject>(_configuration.SubjectSchemaId);
                 Progress += toAdd;
-                _logger.LogInfo("Subjects have been got from Tabidoo");
+
+                _logger.LogInfo("Getting gifts from Tabidoo...");
                 var tabidooGifts = await _dataReceiver.GetTable<Gift>(_configuration.GiftSchemaId);
                 Progress += toAdd;
-                _logger.LogInfo("Gifts have been got from Tabidoo");
 
                 // Read gifts from Excel
+                _logger.LogInfo("Reading gifts from Tabidoo...");
                 var excelGifts = _fileReader.ReadGifts(filePath);
                 Progress += toAdd;
-                _logger.LogInfo("Gifts have been read from Excel document");
 
                 _generator.MarkGifts(excelGifts);
 
                 // Pairing data
+                _logger.LogInfo("Pairing data...");
                 var contactsToInsert = _dataPair.ConnectData(excelGifts, tabidooContacts, tabidooSubjects);
                 _dataPair.ConnectData(tabidooGifts, tabidooContacts, tabidooSubjects);
                 Progress += toAdd;
-                _logger.LogInfo("Data have been paired");
 
                 // Send contacts
+                _logger.LogInfo("Sending contacts to Tabidoo...");
                 await _dataSender.SendItems(_configuration.ContactSchemaId, contactsToInsert);
                 Progress += toAdd;
-                _logger.LogInfo("Contacts have been sent to Tabidoo");
 
                 // send gifts
+                _logger.LogInfo("Sending gifts to Tabidoo...");
                 await _dataSender.SendItems(_configuration.GiftSchemaId, excelGifts);
                 Progress += toAdd;
-                _logger.LogInfo("Gifts have been sent to Tabidoo");
 
                 //Fix it
                 tabidooGifts.AddRange(excelGifts);
                 _updater.UpdateTags(tabidooContacts, tabidooGifts);
 
                 // Update contacts in Tabidoo
+                _logger.LogInfo("Updating contacts in Tabidoo...");
                 await _dataSender.UpdateContacts(_configuration.ContactSchemaId, tabidooContacts);
                 Progress += toAdd;
-                _logger.LogInfo("Contacts have been updated in Tabidoo");
 
                 await _logger.LogToFile(_configuration.LogFilePath);
                 Progress = 100;

@@ -12,7 +12,7 @@ namespace ImportBL
         static DiContainer()
         {
             Container.Register<IConfiguration, Configuration>(Lifestyle.Singleton);
-            Container.Register<ILogger, Logger>();
+            Container.Register<ILogger, Logger>(Lifestyle.Singleton);
             Container.Register<IDataReceiver, TabidooDataReceiver>();
             Container.Register<IDataPair, DataPair>();
             Container.Register<IDataSender, TabidooDataSender>();
