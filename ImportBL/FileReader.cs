@@ -29,22 +29,29 @@ namespace ImportBL
             {
                 try
                 {
-                    string date = row[7].ToString()?.Replace("za ", "01.01.");
+                    string date = row[0].ToString()?.Replace("za ", "01.01.");
 
                     var gift = new Gift
                     {
-                        KontaktEmail = row[0].ToString(),
-                        SubjektId = row[1].ToString(),
-                        Castka = Convert.ToDecimal(row[2].ToString()?.Replace('.', ',')),
-                        CisloUctu = row[3].ToString(),
-                        KodBanky = row[4].ToString(),
-                        VariabilniSymbol = row[5] == null ? Convert.ToInt32(row[8]?.ToString()) : (int?) null,
-                        PoznamkaKDaru = row[6].ToString(),
                         DatumDaru = string.IsNullOrWhiteSpace(date) ? default : Convert.ToDateTime(date),
+                        Aktivity = row[1].ToString(),
+                        KontaktEmail = row[2].ToString(),
+                        ContactName = row[3].ToString(),
+                        ContactSurname = row[4].ToString(),
+                        Castka = Convert.ToDecimal(row[5].ToString()?.Replace('.', ',')),
+                        CisloUctu = row[6].ToString(),
+                        KodBanky = row[7].ToString(),
                         PrisloNaUcet = row[8].ToString(),
-
-                        ZdrojDaru = row[10].ToString(),
-
+                        VariabilniSymbol = row[9] == null ? Convert.ToInt32(row[8]?.ToString()) : (int?) null,
+                        PlatebniMetoda = row[10].ToString(),
+                        StavPlatby = row[11].ToString(),
+                        PotvrzeniKDaru = row[12].ToString(),
+                        PoznamkaKDaru = row[13].ToString(),
+                        SpecifickySymbol = row[14].ToString(),
+                        ZdrojDaru = row[15].ToString(),
+                        Ucel = row[16].ToString(),
+                        Ocisteny = row[17].ToString(),
+                        
                         Row = rowCounter++
                     };
                     gifts.Add(gift);
