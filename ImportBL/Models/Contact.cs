@@ -8,6 +8,8 @@ namespace ImportBL.Models
         public Url Email { get; set; }
         public string CisloUctu { get; set; }
         public string SpecifickySymbol { get; set; }
+        public string Prijmeni { get; set; }
+        public string Jmeno { get; set; }
         public List<string> Tag { get; set; }
         [JsonIgnore]
         public List<Gift> Gifts { get; set; } = new List<Gift>();

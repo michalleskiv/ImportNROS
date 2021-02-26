@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ImportBL.Models
 {
@@ -12,7 +11,6 @@ namespace ImportBL.Models
         public Contact Kontakt { get; set; }
         public string SubjektId { get; set; }
         public Subject Subjekt { get; set; }
-        public List<string> Kampan { get; set; }
         public string PlatebniMetoda { get; set; }
         public string PotvrzeniKDaru { get; set; }
         public string StavPlatby { get; set; }
@@ -24,7 +22,6 @@ namespace ImportBL.Models
         public string PoznamkaKDaru { get; set; }
         public DateTime DatumDaru { get; set; }
         public string PrisloNaUcet { get; set; }
-        public string Poznamka { get; set; }
         public string ZdrojDaru { get; set; }
         public string Aktivity { get; set; }
         public string Ocisteny { get; set; }
@@ -34,13 +31,6 @@ namespace ImportBL.Models
 
         public override bool Equals(Item other)
         {
-            if (!(other is Gift))
-            {
-                return false;
-            }
-
-            var gift = (Gift) other;
-
             return false;
         }
 
