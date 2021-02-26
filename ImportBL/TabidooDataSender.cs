@@ -95,7 +95,12 @@ namespace ImportBL
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogException(contact + "\nwas updated");
+                    _logger.LogException($"{contact}\nwas not updated\n Tabidoo response: {response.Content}");
+                    _logger.ErroneousContactsUpdated++;
+                }
+                else
+                {
+                    _logger.SuccessfullyContactsUpdated++;
                 }
             }
         }
@@ -147,6 +152,7 @@ namespace ImportBL
                 if (localItem != null)
                 {
                     localItem.Id = serializedItem["id"]?.ToString();
+                    _logger.SuccessfullyItemsSent++;
                 }
             }
 
@@ -158,6 +164,7 @@ namespace ImportBL
 
                 var errorToWrite = $"{error}\n" + erroneousItem;
                 _logger.LogException(errorToWrite);
+                _logger.SuccessfullyItemsSent++;
             }
 
             return successfulSent;

@@ -2,7 +2,7 @@
 {
     public class Subject : Item
     {
-        public string Ico { get; set; }
+        public string CisloUctu { get; set; }
 
         public override bool Equals(Item other)
         {
@@ -13,8 +13,8 @@
 
             var subject = (Subject) other;
 
-            if (!string.IsNullOrWhiteSpace(Ico) && !string.IsNullOrWhiteSpace(subject.Ico)
-                                                && Ico == subject.Ico)
+            if (!string.IsNullOrWhiteSpace(CisloUctu) && !string.IsNullOrWhiteSpace(subject.CisloUctu)
+                                                && CisloUctu == subject.CisloUctu)
             {
                 return true;
             }
@@ -25,7 +25,7 @@
         public override string ToString()
         {
             return "Subject: " +
-                   $"\t-ico: {Ico}";
+                   $"\t-ico: {CisloUctu}";
         }
     }
 }

@@ -25,16 +25,15 @@ namespace ImportBL
             var gifts = new List<Gift>();
             int rowCounter = 2;
 
-            foreach (DataRow row in table.Rows)
+            try
             {
-                try
+                foreach (DataRow row in table.Rows)
                 {
                     string date = row[0].ToString()?.Replace("za ", "01.01.");
-
+                        
                     var gift = new Gift
                     {
                         DatumDaru = string.IsNullOrWhiteSpace(date) ? default : Convert.ToDateTime(date),
-                        Aktivity = row[1].ToString(),
                         KontaktEmail = row[2].ToString(),
                         ContactName = row[3].ToString(),
                         ContactSurname = row[4].ToString(),
@@ -42,24 +41,24 @@ namespace ImportBL
                         CisloUctu = row[6].ToString(),
                         KodBanky = row[7].ToString(),
                         PrisloNaUcet = row[8].ToString(),
-                        VariabilniSymbol = row[9] == null ? Convert.ToInt32(row[8]?.ToString()) : (int?) null,
+                        VariabilniSymbol = !string.IsNullOrWhiteSpace(row[9]?.ToString()) ? Convert.ToInt64(row[9]?.ToString()) : (long?) null,
                         PlatebniMetoda = row[10].ToString(),
                         StavPlatby = row[11].ToString(),
                         PotvrzeniKDaru = row[12].ToString(),
                         PoznamkaKDaru = row[13].ToString(),
-                        SpecifickySymbol = row[14].ToString(),
+                        SS = !string.IsNullOrWhiteSpace(row[14]?.ToString()) ? Convert.ToInt64(row[14]?.ToString()) : (long?) null,
                         ZdrojDaru = row[15].ToString(),
-                        Ucel = row[16].ToString(),
-                        Ocisteny = row[17].ToString(),
+                        UcelDaru = row[16].ToString(),
+                        DarOcisteny = !string.IsNullOrWhiteSpace(row[17]?.ToString()) ? Convert.ToInt32(row[17]?.ToString()) : (int?) null,
                         
                         Row = rowCounter++
                     };
                     gifts.Add(gift);
                 }
-                catch (Exception e)
-                {
-                    _logger.LogException(e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new LocalException($"Input file is not correct, row: {rowCounter}, message: {e.Message}");
             }
 
             return gifts;

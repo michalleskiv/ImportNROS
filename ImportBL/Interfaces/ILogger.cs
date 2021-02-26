@@ -15,6 +15,18 @@ namespace ImportBL.Interfaces
         /// </summary>
         event EventHandler StateChanged;
 
+        public int SuccessfullyGiftsRead { get; set; }
+        public int SuccessfullyContactsGot { get; set; }
+        public int SuccessfullySubjectsGot { get; set; }
+        public int SuccessfullyGiftsGot { get; set; }
+        public int SuccessfullyGiftsPaired { get; set; }
+        public int SuccessfullyItemsSent { get; set; }
+        public int SuccessfullyContactsUpdated { get; set; }
+        
+        public int ErroneousGiftsPaired { get; set; }
+        public int ErroneousItemsSent { get; set; }
+        public int ErroneousContactsUpdated { get; set; }
+
         void LogInfo(string message);
         void LogException(LocalException exception);
         void LogException(Exception exception);

@@ -7,7 +7,8 @@ namespace ImportBL.Models
     {
         public Url Email { get; set; }
         public string CisloUctu { get; set; }
-        public string SpecifickySymbol { get; set; }
+        [JsonProperty(PropertyName = "SS")]
+        public long? SS { get; set; }
         public string Prijmeni { get; set; }
         public string Jmeno { get; set; }
         public List<string> Tag { get; set; }
@@ -35,8 +36,7 @@ namespace ImportBL.Models
                 return true;
             }
 
-            if (!string.IsNullOrWhiteSpace(SpecifickySymbol) && !string.IsNullOrWhiteSpace(contact.SpecifickySymbol) 
-                                                             && SpecifickySymbol == contact.SpecifickySymbol)
+            if (SS != null && contact.SS != null && SS == contact.SS)
             {
                 return true;
             }
@@ -49,7 +49,7 @@ namespace ImportBL.Models
             return "Contact:\n" +
                    $"\t-email: {Email}\n" +
                    $"\t-cislo uctu: {CisloUctu}\n" +
-                   $"\t-ss: {SpecifickySymbol}\n" +
+                   $"\t-ss: {SS}\n" +
                    $"\t-id: {Id}";
         }
     }
