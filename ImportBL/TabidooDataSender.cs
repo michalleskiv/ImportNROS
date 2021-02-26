@@ -164,7 +164,7 @@ namespace ImportBL
 
                 var errorToWrite = $"{error}\n" + erroneousItem;
                 _logger.LogException(errorToWrite);
-                _logger.SuccessfullyItemsSent++;
+                _logger.ErroneousItemsSent++;
             }
 
             return successfulSent;

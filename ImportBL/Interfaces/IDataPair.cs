@@ -15,6 +15,7 @@ namespace ImportBL.Interfaces
         /// <param name="contacts">List of contacts</param>
         /// <param name="subjects">List of subjects</param>
         /// <returns>List of new contacts to add to Tabidoo</returns>
-        List<Contact> ConnectData(List<Gift> gifts, List<Contact> contacts, List<Subject> subjects);
+        List<Contact> ConnectDataExcel(List<Gift> gifts, List<Contact> contacts, List<Subject> subjects);
+        void ConnectDataTabidoo(List<Gift> gifts, List<Contact> contacts);
     }
 }

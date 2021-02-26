@@ -75,7 +75,7 @@ namespace ImportBL
                 Progress += toAdd;
 
                 // Read gifts from Excel
-                _logger.LogInfo("Reading gifts from Tabidoo...");
+                _logger.LogInfo("Reading gifts from Excel...");
                 var excelGifts = _fileReader.ReadGifts(filePath);
                 _logger.LogInfo($"{excelGifts.Count} gifts have been read from Excel");
                 Progress += toAdd;
@@ -84,8 +84,8 @@ namespace ImportBL
 
                 // Pairing data
                 _logger.LogInfo("Pairing data...");
-                var contactsToInsert = _dataPair.ConnectData(excelGifts, tabidooContacts, tabidooSubjects);
-                _dataPair.ConnectData(tabidooGifts, tabidooContacts, tabidooSubjects);
+                var contactsToInsert = _dataPair.ConnectDataExcel(excelGifts, tabidooContacts, tabidooSubjects);
+                _dataPair.ConnectDataTabidoo(tabidooGifts, tabidooContacts);
                 Progress += toAdd;
 
                 // Send contacts
@@ -101,11 +101,11 @@ namespace ImportBL
                 // send gifts
                 _logger.LogInfo("Sending gifts to Tabidoo...");
                 await _dataSender.SendItems(_configuration.GiftSchemaId, excelGifts);
-                _logger.LogInfo($"{_logger.SuccessfullyItemsSent} gifts have been successfully sent to Tabidoo");
+                _logger.LogInfo($"{excelGifts.Count - _logger.ErroneousItemsSent} gifts have been successfully sent to Tabidoo");
                 _logger.LogInfo($"{_logger.ErroneousItemsSent} errors while sending gifts");
                 Progress += toAdd;
 
-                var contactsToUpdate = excelGifts.Select(g => g.Kontakt).ToList();
+                var contactsToUpdate = excelGifts.Select(g => g.Kontakt).Where(k => k != null).ToList();
 
                 MergeGifts(tabidooGifts, excelGifts);
                 _updater.UpdateTags(contactsToUpdate, tabidooGifts);

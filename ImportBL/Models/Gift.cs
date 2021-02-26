@@ -13,8 +13,6 @@ namespace ImportBL.Models
         [JsonIgnore]
         public string ContactSurname { get; set; }
         public Contact Kontakt { get; set; }
-        [JsonIgnore]
-        public string SubjektId { get; set; }
         public Subject Subjekt { get; set; }
         public string PlatebniMetoda { get; set; }
         public string PotvrzeniKDaru { get; set; }

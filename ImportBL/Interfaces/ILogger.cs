@@ -14,11 +14,7 @@ namespace ImportBL.Interfaces
         /// Invokes if log list appends
         /// </summary>
         event EventHandler StateChanged;
-
-        public int SuccessfullyGiftsRead { get; set; }
-        public int SuccessfullyContactsGot { get; set; }
-        public int SuccessfullySubjectsGot { get; set; }
-        public int SuccessfullyGiftsGot { get; set; }
+        
         public int SuccessfullyGiftsPaired { get; set; }
         public int SuccessfullyItemsSent { get; set; }
         public int SuccessfullyContactsUpdated { get; set; }

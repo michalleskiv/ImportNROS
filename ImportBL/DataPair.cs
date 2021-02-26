@@ -16,7 +16,7 @@ namespace ImportBL
             _logger = logger;
         }
 
-        public List<Contact> ConnectData(List<Gift> gifts, List<Contact> contacts, List<Subject> subjects)
+        public List<Contact> ConnectDataExcel(List<Gift> gifts, List<Contact> contacts, List<Subject> subjects)
         {
             var contactsToInsert = new List<Contact>();
 
@@ -27,7 +27,7 @@ namespace ImportBL
                     if (string.IsNullOrWhiteSpace(gift.KontaktEmail) && gift.SS == null &&
                         !string.IsNullOrWhiteSpace(gift.CisloUctu))
                     {
-                        ConnectWithContacts(gift, contacts, contactsToInsert);
+                        ConnectWithContacts(gift, contacts);
 
                         if (gift.Kontakt == null)
                         {
@@ -44,7 +44,7 @@ namespace ImportBL
                     }
                     else
                     {
-                        ConnectWithContacts(gift, contacts, contactsToInsert);
+                        ConnectWithContacts(gift, contacts);
                         CreateContact(gift, contacts, contactsToInsert);
                         _logger.SuccessfullyGiftsPaired++;
                     }
@@ -62,7 +62,15 @@ namespace ImportBL
             return contactsToInsert;
         }
 
-        private void ConnectWithContacts(Gift gift, List<Contact> contacts, List<Contact> contactsToInsert)
+        public void ConnectDataTabidoo(List<Gift> gifts, List<Contact> contacts)
+        {
+            foreach (var gift in gifts)
+            {
+                ConnectWithContacts(gift, contacts);
+            }
+        }
+
+        private void ConnectWithContacts(Gift gift, List<Contact> contacts)
         {
             // connect by database ID
             if (!string.IsNullOrWhiteSpace(gift.Kontakt?.Id))
