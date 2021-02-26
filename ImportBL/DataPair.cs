@@ -54,7 +54,9 @@ namespace ImportBL
                         {
                             Email = new Url {Href = gift.KontaktEmail},
                             CisloUctu = gift.CisloUctu,
-                            SpecifickySymbol = gift.SpecifickySymbol
+                            SpecifickySymbol = gift.SpecifickySymbol,
+                            Prijmeni = gift.ContactSurname,
+                            Jmeno = gift.ContactName
                         };
 
                         contactsToInsert.Add(gift.Kontakt);
